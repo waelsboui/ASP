@@ -153,9 +153,10 @@ function Simulates(Que::Runway,env::Environment,nSimulations::Int64)
     println("0.50 quantile of Arrival time: ", round(ArrivalTimeArray[cld(length(ArrivalTimeArray)*50,100)],3) )
     println("0.90 quantile of Arrival time: ", round(ArrivalTimeArray[cld(length(ArrivalTimeArray)*90,100)],3) )
     println("0.99 quantile of Arrival time: ", round(ArrivalTimeArray[cld(length(ArrivalTimeArray)*99,100)],3) , "\n")
-    #plot(sort(ArrivalTimeArray, alg=QuickSort, rev=true), label  = "Arrival Time Graph")
     
-    plot(sort(ArrivalTimeArray, alg=QuickSort, rev=true))
+    #Plot Arrival Times
+    plot(sort(ArrivalTimeArray, alg=QuickSort, rev=true), label  = "Arrival Time Graph")
+
     
     simulationsStat = tally("TallyStore Stats")
     for element in data
