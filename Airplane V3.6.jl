@@ -4,6 +4,7 @@ using DataStructures
 using RandomStreams
 using PyPlot
 
+
 include("TallyStat.jl")
 using .TallyStat
 include("TallyStoreStat.jl")
@@ -138,20 +139,24 @@ function Simulates(Que::Runway,env::Environment,nSimulations::Int64)
 
     ##Show TallyStore Stats
     data = quickSortServList(Que.statStore)
+    
     println("###Quantile of delay time###")
-    println("0.10 quantile or delay time: ", round(data[(div(length(data),100)*10)+1],3) )
-    println("0.50 quantile or delay time: ", round(data[(div(length(data),100)*50)+1],3) )
-    println("0.90 quantile or delay time: ", round(data[(div(length(data),100)*90)+1],3) )
-    println("0.99 quantile or delay time: ", round(data[(div(length(data),100)*99)+1],3) , "\n")
+    println("0.10 quantile or delay time: ", round(data[cld(length(data)*10,100)],3) )
+    println("0.50 quantile or delay time: ", round(data[cld(length(data)*50,100)],3) )
+    println("0.90 quantile or delay time: ", round(data[cld(length(data)*90,100)],3) )
+    println("0.99 quantile or delay time: ", round(data[cld(length(data)*99,100)],3) , "\n")
     
     
     ArrivalTimeArray = quickSortArrvList(Que.statStore)
     println("###Quantile of Arrival time###")
-    println("0.10 quantile of Arrival time: ", round(ArrivalTimeArray[(div(length(ArrivalTimeArray),100)*10)+1],3) )
-    println("0.50 quantile of Arrival time: ", round(ArrivalTimeArray[(div(length(ArrivalTimeArray),100)*50)+1],3) )
-    println("0.90 quantile of Arrival time: ", round(ArrivalTimeArray[(div(length(ArrivalTimeArray),100)*90)+1],3) )
-    println("0.99 quantile of Arrival time: ", round(ArrivalTimeArray[(div(length(ArrivalTimeArray),100))+99],3) , "\n")
-    plot(ArrivalTimeArray)
+    println("0.10 quantile of Arrival time: ", round(ArrivalTimeArray[cld(length(ArrivalTimeArray)*10,100)],3) )
+    println("0.50 quantile of Arrival time: ", round(ArrivalTimeArray[cld(length(ArrivalTimeArray)*50,100)],3) )
+    println("0.90 quantile of Arrival time: ", round(ArrivalTimeArray[cld(length(ArrivalTimeArray)*90,100)],3) )
+    println("0.99 quantile of Arrival time: ", round(ArrivalTimeArray[cld(length(ArrivalTimeArray)*99,100)],3) , "\n")
+    #plot(sort(ArrivalTimeArray, alg=QuickSort, rev=true), label  = "Arrival Time Graph")
+    
+    plot(sort(ArrivalTimeArray, alg=QuickSort, rev=true))
+    
     simulationsStat = tally("TallyStore Stats")
     for element in data
         simulationsStat = tallyAdd(element, simulationsStat)
